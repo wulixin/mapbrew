@@ -1,0 +1,138 @@
+---
+title: "使用 amCharts + R 绘制中国地图"
+author: "程振兴"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## 安装
+
+```{r eval=FALSE, include=TRUE}
+devtools::install_github('czxa/mapbrew')
+```
+
+## 绘制中国地图
+
+```{r}
+library(motherland)
+library(mapbrew)
+library(magrittr)
+df <- motherland::chinadf %>% 
+  dplyr::filter(region == "中国")
+cnmap(id = df$name, 
+      value = df$value, 
+      description = paste0(df$name, ": ", df$value, "人"),
+      smallMap = 0, 
+      theme = "dark",
+      width = "100%")
+```
+
+### 更改主题
+
+首先是默认主题：
+
+```{r}
+cnmap(id = df$name, 
+      value = df$value, 
+      description = paste0(df$name, ": ", df$value, "人"),
+      smallMap = 0,
+      width = "100%")
+```
+
+light 主题：
+
+```{r}
+cnmap(id = df$name, 
+      value = df$value, 
+      description = paste0(df$name, ": ", df$value, "人"),
+      smallMap = 0,
+      width = "100%",
+      theme = "light")
+```
+
+chalk 主题：
+
+```{r}
+cnmap(id = df$name, 
+      value = df$value, 
+      description = paste0(df$name, ": ", df$value, "人"),
+      smallMap = 0,
+      width = "100%",
+      theme = "chalk")
+```
+
+dark 主题：
+
+```{r}
+cnmap(id = df$name, 
+      value = df$value, 
+      description = paste0(df$name, ": ", df$value, "人"),
+      smallMap = 0,
+      width = "100%",
+      theme = "dark")
+```
+
+black 主题：
+
+```{r}
+cnmap(id = df$name, 
+      value = df$value, 
+      description = paste0(df$name, ": ", df$value, "人"),
+      smallMap = 0,
+      width = "100%",
+      theme = "black")
+```
+
+### colorSteps：图例中颜色的分层数量
+
+```{r}
+cnmap(id = df$name, 
+      value = df$value, 
+      description = paste0(df$name, ": ", df$value, "人"),
+      smallMap = 0,
+      width = "100%",
+      colorSteps = 5)
+```
+
+### smallMap：添加小地图
+
+```{r}
+cnmap(id = df$name, 
+      value = df$value, 
+      description = paste0(df$name, ": ", df$value, "人"),
+      smallMap = 1,
+      smallMapTop = 160,
+      smallMapRight = 10,
+      width = "100%",
+      colorSteps = 5)
+```
+
+### valueLegendBottom / valueLegendRight：图例的位置
+
+```{r}
+cnmap(id = df$name, 
+      value = df$value, 
+      description = paste0(df$name, ": ", df$value, "人"),
+      smallMap = 0,
+      valueLegendBottom = 40,
+      valueLegendRight = 350,
+      width = "100%",
+      colorSteps = 5)
+```
+
+## 其它
+
+```r 
+?mapbrew::cnmap()
+```

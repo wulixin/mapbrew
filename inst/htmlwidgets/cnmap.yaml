@@ -1,0 +1,22 @@
+# (uncomment to add a dependency)
+dependencies:
+ - name: cnmap
+   version: 1.4.76
+   src: htmlwidgets/lib/
+   script:
+    - ammap.js
+    - black.js
+    - chalk.js
+    - chinaHigh.js
+    - dark.js
+    - export.js
+    - light.js
+    - FileSaver.js
+    - jszip.js
+    - pdfmake.js
+    - vfs_fonts.js
+    - xlsx.js
+    - fabric.js
+   stylesheet:
+    - ammap.css
+    - export.css

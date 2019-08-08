@@ -1,0 +1,21 @@
+Package: mapbrew
+Title: Mapping China using amCharts + R
+Version: 0.0.0.9000
+Authors@R: person("Zhenxing", "Cheng", email = "czxjnu@163.com", role = c("aut", "cre"))
+Description: Mapping China using amCharts + R.
+Depends: R (>= 3.0.0)
+License: MIT + file LICENSE
+Encoding: UTF-8
+Date: 2019-03-15
+LazyData: true
+RoxygenNote: 6.1.1
+Suggests: 
+    testthat,
+    knitr,
+    rmarkdown,
+    dplyr,
+    magrittr,
+    hchinamap
+VignetteBuilder: knitr
+Imports: 
+    htmlwidgets

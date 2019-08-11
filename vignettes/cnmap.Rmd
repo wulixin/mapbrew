@@ -4,7 +4,7 @@ author: "程振兴"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{使用 amCharts + R 绘制中国地图}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 ## 安装
 
 ```{r eval=FALSE, include=TRUE}
-devtools::install_github('czxa/mapbrew')
+devtools::install_github('czxa/mapbrew', build_vignettes = TRUE)
 ```
 
 ## 绘制中国地图

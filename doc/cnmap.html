@@ -7,14 +7,15 @@
 <meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<meta name="author" content="程振兴" />
+<meta name="author" content="Zhenxing Cheng" />
 
-<meta name="date" content="2019-03-15" />
+<meta name="date" content="2019-10-01" />
 
-<title>使用 amCharts + R 绘制中国地图</title>
+<title>Map China With AmCharts and R</title>
 
 <script>(function() {
   // If window.HTMLWidgets is already defined, then use it; otherwise create a
@@ -7118,7 +7119,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' || rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -7313,6 +7314,9 @@ code > span.al { color: #ff0000; font-weight: bold; }
 code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61717; background-color: #e3d2d2; } 
 </style>
 
+
+
+
 </head>
 
 <body>
@@ -7320,117 +7324,129 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 
 
 
-<h1 class="title toc-ignore">使用 amCharts + R 绘制中国地图</h1>
-<h4 class="author"><em>程振兴</em></h4>
-<h4 class="date"><em>2019-03-15</em></h4>
+<h1 class="title toc-ignore">Map China With AmCharts and R</h1>
+<h4 class="author">Zhenxing Cheng</h4>
+<h4 class="date">2019-10-01</h4>
 
 
 
-<div id="section" class="section level2">
-<h2>安装</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&#39;czxa/mapbrew&#39;</span>)</a></code></pre></div>
+<div id="installation" class="section level2">
+<h2>Installation</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&#39;czxa/mapbrew&#39;</span>, <span class="dt">build_vignettes =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 </div>
-<div id="section-1" class="section level2">
-<h2>绘制中国地图</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">library</span>(motherland)</a>
-<a class="sourceLine" id="cb2-2" title="2"><span class="kw">library</span>(mapbrew)</a>
-<a class="sourceLine" id="cb2-3" title="3"><span class="kw">library</span>(magrittr)</a>
-<a class="sourceLine" id="cb2-4" title="4">df &lt;-<span class="st"> </span>motherland<span class="op">::</span>chinadf <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb2-5" title="5"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(region <span class="op">==</span><span class="st"> &quot;中国&quot;</span>)</a>
-<a class="sourceLine" id="cb2-6" title="6"><span class="kw">cnmap</span>(<span class="dt">id =</span> df<span class="op">$</span>name, </a>
-<a class="sourceLine" id="cb2-7" title="7">      <span class="dt">value =</span> df<span class="op">$</span>value, </a>
-<a class="sourceLine" id="cb2-8" title="8">      <span class="dt">description =</span> <span class="kw">paste0</span>(df<span class="op">$</span>name, <span class="st">&quot;: &quot;</span>, df<span class="op">$</span>value, <span class="st">&quot;人&quot;</span>),</a>
-<a class="sourceLine" id="cb2-9" title="9">      <span class="dt">smallMap =</span> <span class="dv">0</span>, </a>
-<a class="sourceLine" id="cb2-10" title="10">      <span class="dt">theme =</span> <span class="st">&quot;dark&quot;</span>,</a>
-<a class="sourceLine" id="cb2-11" title="11">      <span class="dt">width =</span> <span class="st">&quot;100%&quot;</span>)</a></code></pre></div>
-<div id="htmlwidget-9ff3d32fffe0a690f07c" style="width:100%;height:288px;" class="cnmap html-widget"></div>
-<script type="application/json" data-for="htmlwidget-9ff3d32fffe0a690f07c">{"x":{"id":["北京","天津","河北","山西","内蒙古","辽宁","吉林","黑龙江","上海","江苏","浙江","安徽","福建","江西","山东","河南","湖北","湖南","广东","广西","海南","重庆","四川","贵州","云南","西藏","陕西","甘肃","青海","宁夏","新疆","台湾","香港","澳门","南海诸岛"],"value":[44,28,3,65,18,46,67,80,8,50,4,78,78,39,16,16,49,46,46,92,9,79,59,50,18,33,63,91,41,39,78,58,48,42,40],"description":["北京: 44人","天津: 28人","河北: 3人","山西: 65人","内蒙古: 18人","辽宁: 46人","吉林: 67人","黑龙江: 80人","上海: 8人","江苏: 50人","浙江: 4人","安徽: 78人","福建: 78人","江西: 39人","山东: 16人","河南: 16人","湖北: 49人","湖南: 46人","广东: 46人","广西: 92人","海南: 9人","重庆: 79人","四川: 59人","贵州: 50人","云南: 18人","西藏: 33人","陕西: 63人","甘肃: 91人","青海: 41人","宁夏: 39人","新疆: 78人","台湾: 58人","香港: 48人","澳门: 42人","南海诸岛: 40人"],"theme":"dark","colorSteps":12,"smallMap":0,"smallMapTop":50,"smallMapRight":50,"export":1,"valueLegendRight":10,"valueLegendBottom":10,"minValue":"很少","maxValue":"很多","title":"中国地图","titleSize":18,"titleColor":"#363636","subtitle":"程振兴","subtitleSize":16,"subtitleColor":"#363636","autoZoom":1,"outlineAlpha":0.5,"outlineColor":"#363636","outlineThickness":0.5,"rollOverColor":null},"evals":[],"jsHooks":[]}</script>
-<div id="section-2" class="section level3">
-<h3>更改主题</h3>
-<p>首先是默认主题：</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">cnmap</span>(<span class="dt">id =</span> df<span class="op">$</span>name, </a>
-<a class="sourceLine" id="cb3-2" title="2">      <span class="dt">value =</span> df<span class="op">$</span>value, </a>
-<a class="sourceLine" id="cb3-3" title="3">      <span class="dt">description =</span> <span class="kw">paste0</span>(df<span class="op">$</span>name, <span class="st">&quot;: &quot;</span>, df<span class="op">$</span>value, <span class="st">&quot;人&quot;</span>),</a>
-<a class="sourceLine" id="cb3-4" title="4">      <span class="dt">smallMap =</span> <span class="dv">0</span>,</a>
-<a class="sourceLine" id="cb3-5" title="5">      <span class="dt">width =</span> <span class="st">&quot;100%&quot;</span>)</a></code></pre></div>
-<div id="htmlwidget-9017046bf151c4d9e29e" style="width:100%;height:288px;" class="cnmap html-widget"></div>
-<script type="application/json" data-for="htmlwidget-9017046bf151c4d9e29e">{"x":{"id":["北京","天津","河北","山西","内蒙古","辽宁","吉林","黑龙江","上海","江苏","浙江","安徽","福建","江西","山东","河南","湖北","湖南","广东","广西","海南","重庆","四川","贵州","云南","西藏","陕西","甘肃","青海","宁夏","新疆","台湾","香港","澳门","南海诸岛"],"value":[44,28,3,65,18,46,67,80,8,50,4,78,78,39,16,16,49,46,46,92,9,79,59,50,18,33,63,91,41,39,78,58,48,42,40],"description":["北京: 44人","天津: 28人","河北: 3人","山西: 65人","内蒙古: 18人","辽宁: 46人","吉林: 67人","黑龙江: 80人","上海: 8人","江苏: 50人","浙江: 4人","安徽: 78人","福建: 78人","江西: 39人","山东: 16人","河南: 16人","湖北: 49人","湖南: 46人","广东: 46人","广西: 92人","海南: 9人","重庆: 79人","四川: 59人","贵州: 50人","云南: 18人","西藏: 33人","陕西: 63人","甘肃: 91人","青海: 41人","宁夏: 39人","新疆: 78人","台湾: 58人","香港: 48人","澳门: 42人","南海诸岛: 40人"],"theme":null,"colorSteps":12,"smallMap":0,"smallMapTop":50,"smallMapRight":50,"export":1,"valueLegendRight":10,"valueLegendBottom":10,"minValue":"很少","maxValue":"很多","title":"中国地图","titleSize":18,"titleColor":"#363636","subtitle":"程振兴","subtitleSize":16,"subtitleColor":"#363636","autoZoom":1,"outlineAlpha":0.5,"outlineColor":"#363636","outlineThickness":0.5,"rollOverColor":null},"evals":[],"jsHooks":[]}</script>
-<p>light 主题：</p>
+<div id="china-map" class="section level2">
+<h2>China map</h2>
+<p>Load sample data:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">dir &lt;-<span class="st"> </span><span class="kw">tempdir</span>()</a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="kw">download.file</span>(<span class="st">&#39;https://czxb.github.io/br/chinadf.rda&#39;</span>, <span class="kw">file.path</span>(dir, <span class="st">&#39;chinadf.rda&#39;</span>))</a>
+<a class="sourceLine" id="cb2-3" title="3"><span class="kw">load</span>(<span class="kw">file.path</span>(dir, <span class="st">&#39;chinadf.rda&#39;</span>), <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb2-4" title="4"><span class="co">#&gt; Loading objects:</span></a>
+<a class="sourceLine" id="cb2-5" title="5"><span class="co">#&gt;   chinadf</span></a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">library</span>(mapbrew)</a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="kw">library</span>(magrittr)</a>
+<a class="sourceLine" id="cb3-3" title="3">df &lt;-<span class="st"> </span>chinadf <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(region <span class="op">==</span><span class="st"> &quot;China&quot;</span>)</a>
+<a class="sourceLine" id="cb3-5" title="5"><span class="kw">cnmap</span>(<span class="dt">id =</span> df<span class="op">$</span>name, </a>
+<a class="sourceLine" id="cb3-6" title="6">      <span class="dt">value =</span> df<span class="op">$</span>value, </a>
+<a class="sourceLine" id="cb3-7" title="7">      <span class="dt">description =</span> <span class="kw">paste0</span>(df<span class="op">$</span>name, <span class="st">&quot;: &quot;</span>, df<span class="op">$</span>value, <span class="st">&quot;units&quot;</span>),</a>
+<a class="sourceLine" id="cb3-8" title="8">      <span class="dt">smallMap =</span> <span class="dv">0</span>, </a>
+<a class="sourceLine" id="cb3-9" title="9">      <span class="dt">theme =</span> <span class="st">&quot;dark&quot;</span>,</a>
+<a class="sourceLine" id="cb3-10" title="10">      <span class="dt">width =</span> <span class="st">&quot;100%&quot;</span>)</a></code></pre></div>
+<div id="htmlwidget-e11341ed4db7a741502c" style="width:100%;height:288px;" class="cnmap html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e11341ed4db7a741502c">{"x":{"id":["北京","天津","河北","山西","内蒙古","辽宁","吉林","黑龙江","上海","江苏","浙江","安徽","福建","江西","山东","河南","湖北","湖南","广东","广西","海南","重庆","四川","贵州","云南","西藏","陕西","甘肃","青海","宁夏","新疆","台湾","香港","澳门","南海诸岛"],"value":[44,28,3,65,18,46,67,80,8,50,4,78,78,39,16,16,49,46,46,92,9,79,59,50,18,33,63,91,41,39,78,58,48,42,40],"description":["北京: 44units","天津: 28units","河北: 3units","山西: 65units","内蒙古: 18units","辽宁: 46units","吉林: 67units","黑龙江: 80units","上海: 8units","江苏: 50units","浙江: 4units","安徽: 78units","福建: 78units","江西: 39units","山东: 16units","河南: 16units","湖北: 49units","湖南: 46units","广东: 46units","广西: 92units","海南: 9units","重庆: 79units","四川: 59units","贵州: 50units","云南: 18units","西藏: 33units","陕西: 63units","甘肃: 91units","青海: 41units","宁夏: 39units","新疆: 78units","台湾: 58units","香港: 48units","澳门: 42units","南海诸岛: 40units"],"theme":"dark","colorSteps":12,"smallMap":0,"smallMapTop":50,"smallMapRight":50,"export":1,"valueLegendRight":10,"valueLegendBottom":10,"minValue":"min","maxValue":"max","title":"Map of China","titleSize":18,"titleColor":"#363636","subtitle":"czxa.top","subtitleSize":16,"subtitleColor":"#363636","autoZoom":1,"outlineAlpha":0.5,"outlineColor":"#363636","outlineThickness":0.5,"rollOverColor":null},"evals":[],"jsHooks":[]}</script>
+<div id="themes" class="section level3">
+<h3>Themes</h3>
+<p>The default theme:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">cnmap</span>(<span class="dt">id =</span> df<span class="op">$</span>name, </a>
 <a class="sourceLine" id="cb4-2" title="2">      <span class="dt">value =</span> df<span class="op">$</span>value, </a>
-<a class="sourceLine" id="cb4-3" title="3">      <span class="dt">description =</span> <span class="kw">paste0</span>(df<span class="op">$</span>name, <span class="st">&quot;: &quot;</span>, df<span class="op">$</span>value, <span class="st">&quot;人&quot;</span>),</a>
+<a class="sourceLine" id="cb4-3" title="3">      <span class="dt">description =</span> <span class="kw">paste0</span>(df<span class="op">$</span>name, <span class="st">&quot;: &quot;</span>, df<span class="op">$</span>value, <span class="st">&quot;units&quot;</span>),</a>
 <a class="sourceLine" id="cb4-4" title="4">      <span class="dt">smallMap =</span> <span class="dv">0</span>,</a>
-<a class="sourceLine" id="cb4-5" title="5">      <span class="dt">width =</span> <span class="st">&quot;100%&quot;</span>,</a>
-<a class="sourceLine" id="cb4-6" title="6">      <span class="dt">theme =</span> <span class="st">&quot;light&quot;</span>)</a></code></pre></div>
-<div id="htmlwidget-c72a4ce5ec44372aadfc" style="width:100%;height:288px;" class="cnmap html-widget"></div>
-<script type="application/json" data-for="htmlwidget-c72a4ce5ec44372aadfc">{"x":{"id":["北京","天津","河北","山西","内蒙古","辽宁","吉林","黑龙江","上海","江苏","浙江","安徽","福建","江西","山东","河南","湖北","湖南","广东","广西","海南","重庆","四川","贵州","云南","西藏","陕西","甘肃","青海","宁夏","新疆","台湾","香港","澳门","南海诸岛"],"value":[44,28,3,65,18,46,67,80,8,50,4,78,78,39,16,16,49,46,46,92,9,79,59,50,18,33,63,91,41,39,78,58,48,42,40],"description":["北京: 44人","天津: 28人","河北: 3人","山西: 65人","内蒙古: 18人","辽宁: 46人","吉林: 67人","黑龙江: 80人","上海: 8人","江苏: 50人","浙江: 4人","安徽: 78人","福建: 78人","江西: 39人","山东: 16人","河南: 16人","湖北: 49人","湖南: 46人","广东: 46人","广西: 92人","海南: 9人","重庆: 79人","四川: 59人","贵州: 50人","云南: 18人","西藏: 33人","陕西: 63人","甘肃: 91人","青海: 41人","宁夏: 39人","新疆: 78人","台湾: 58人","香港: 48人","澳门: 42人","南海诸岛: 40人"],"theme":"light","colorSteps":12,"smallMap":0,"smallMapTop":50,"smallMapRight":50,"export":1,"valueLegendRight":10,"valueLegendBottom":10,"minValue":"很少","maxValue":"很多","title":"中国地图","titleSize":18,"titleColor":"#363636","subtitle":"程振兴","subtitleSize":16,"subtitleColor":"#363636","autoZoom":1,"outlineAlpha":0.5,"outlineColor":"#363636","outlineThickness":0.5,"rollOverColor":null},"evals":[],"jsHooks":[]}</script>
-<p>chalk 主题：</p>
+<a class="sourceLine" id="cb4-5" title="5">      <span class="dt">width =</span> <span class="st">&quot;100%&quot;</span>)</a></code></pre></div>
+<div id="htmlwidget-412b8e8d8a5567d560d4" style="width:100%;height:288px;" class="cnmap html-widget"></div>
+<script type="application/json" data-for="htmlwidget-412b8e8d8a5567d560d4">{"x":{"id":["北京","天津","河北","山西","内蒙古","辽宁","吉林","黑龙江","上海","江苏","浙江","安徽","福建","江西","山东","河南","湖北","湖南","广东","广西","海南","重庆","四川","贵州","云南","西藏","陕西","甘肃","青海","宁夏","新疆","台湾","香港","澳门","南海诸岛"],"value":[44,28,3,65,18,46,67,80,8,50,4,78,78,39,16,16,49,46,46,92,9,79,59,50,18,33,63,91,41,39,78,58,48,42,40],"description":["北京: 44units","天津: 28units","河北: 3units","山西: 65units","内蒙古: 18units","辽宁: 46units","吉林: 67units","黑龙江: 80units","上海: 8units","江苏: 50units","浙江: 4units","安徽: 78units","福建: 78units","江西: 39units","山东: 16units","河南: 16units","湖北: 49units","湖南: 46units","广东: 46units","广西: 92units","海南: 9units","重庆: 79units","四川: 59units","贵州: 50units","云南: 18units","西藏: 33units","陕西: 63units","甘肃: 91units","青海: 41units","宁夏: 39units","新疆: 78units","台湾: 58units","香港: 48units","澳门: 42units","南海诸岛: 40units"],"theme":null,"colorSteps":12,"smallMap":0,"smallMapTop":50,"smallMapRight":50,"export":1,"valueLegendRight":10,"valueLegendBottom":10,"minValue":"min","maxValue":"max","title":"Map of China","titleSize":18,"titleColor":"#363636","subtitle":"czxa.top","subtitleSize":16,"subtitleColor":"#363636","autoZoom":1,"outlineAlpha":0.5,"outlineColor":"#363636","outlineThickness":0.5,"rollOverColor":null},"evals":[],"jsHooks":[]}</script>
+<p>light:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">cnmap</span>(<span class="dt">id =</span> df<span class="op">$</span>name, </a>
 <a class="sourceLine" id="cb5-2" title="2">      <span class="dt">value =</span> df<span class="op">$</span>value, </a>
-<a class="sourceLine" id="cb5-3" title="3">      <span class="dt">description =</span> <span class="kw">paste0</span>(df<span class="op">$</span>name, <span class="st">&quot;: &quot;</span>, df<span class="op">$</span>value, <span class="st">&quot;人&quot;</span>),</a>
+<a class="sourceLine" id="cb5-3" title="3">      <span class="dt">description =</span> <span class="kw">paste0</span>(df<span class="op">$</span>name, <span class="st">&quot;: &quot;</span>, df<span class="op">$</span>value, <span class="st">&quot;units&quot;</span>),</a>
 <a class="sourceLine" id="cb5-4" title="4">      <span class="dt">smallMap =</span> <span class="dv">0</span>,</a>
 <a class="sourceLine" id="cb5-5" title="5">      <span class="dt">width =</span> <span class="st">&quot;100%&quot;</span>,</a>
-<a class="sourceLine" id="cb5-6" title="6">      <span class="dt">theme =</span> <span class="st">&quot;chalk&quot;</span>)</a></code></pre></div>
-<div id="htmlwidget-42e7b82cefbe97dfb387" style="width:100%;height:288px;" class="cnmap html-widget"></div>
-<script type="application/json" data-for="htmlwidget-42e7b82cefbe97dfb387">{"x":{"id":["北京","天津","河北","山西","内蒙古","辽宁","吉林","黑龙江","上海","江苏","浙江","安徽","福建","江西","山东","河南","湖北","湖南","广东","广西","海南","重庆","四川","贵州","云南","西藏","陕西","甘肃","青海","宁夏","新疆","台湾","香港","澳门","南海诸岛"],"value":[44,28,3,65,18,46,67,80,8,50,4,78,78,39,16,16,49,46,46,92,9,79,59,50,18,33,63,91,41,39,78,58,48,42,40],"description":["北京: 44人","天津: 28人","河北: 3人","山西: 65人","内蒙古: 18人","辽宁: 46人","吉林: 67人","黑龙江: 80人","上海: 8人","江苏: 50人","浙江: 4人","安徽: 78人","福建: 78人","江西: 39人","山东: 16人","河南: 16人","湖北: 49人","湖南: 46人","广东: 46人","广西: 92人","海南: 9人","重庆: 79人","四川: 59人","贵州: 50人","云南: 18人","西藏: 33人","陕西: 63人","甘肃: 91人","青海: 41人","宁夏: 39人","新疆: 78人","台湾: 58人","香港: 48人","澳门: 42人","南海诸岛: 40人"],"theme":"chalk","colorSteps":12,"smallMap":0,"smallMapTop":50,"smallMapRight":50,"export":1,"valueLegendRight":10,"valueLegendBottom":10,"minValue":"很少","maxValue":"很多","title":"中国地图","titleSize":18,"titleColor":"#363636","subtitle":"程振兴","subtitleSize":16,"subtitleColor":"#363636","autoZoom":1,"outlineAlpha":0.5,"outlineColor":"#363636","outlineThickness":0.5,"rollOverColor":null},"evals":[],"jsHooks":[]}</script>
-<p>dark 主题：</p>
+<a class="sourceLine" id="cb5-6" title="6">      <span class="dt">theme =</span> <span class="st">&quot;light&quot;</span>)</a></code></pre></div>
+<div id="htmlwidget-ee522e8127ea9f42e40e" style="width:100%;height:288px;" class="cnmap html-widget"></div>
+<script type="application/json" data-for="htmlwidget-ee522e8127ea9f42e40e">{"x":{"id":["北京","天津","河北","山西","内蒙古","辽宁","吉林","黑龙江","上海","江苏","浙江","安徽","福建","江西","山东","河南","湖北","湖南","广东","广西","海南","重庆","四川","贵州","云南","西藏","陕西","甘肃","青海","宁夏","新疆","台湾","香港","澳门","南海诸岛"],"value":[44,28,3,65,18,46,67,80,8,50,4,78,78,39,16,16,49,46,46,92,9,79,59,50,18,33,63,91,41,39,78,58,48,42,40],"description":["北京: 44units","天津: 28units","河北: 3units","山西: 65units","内蒙古: 18units","辽宁: 46units","吉林: 67units","黑龙江: 80units","上海: 8units","江苏: 50units","浙江: 4units","安徽: 78units","福建: 78units","江西: 39units","山东: 16units","河南: 16units","湖北: 49units","湖南: 46units","广东: 46units","广西: 92units","海南: 9units","重庆: 79units","四川: 59units","贵州: 50units","云南: 18units","西藏: 33units","陕西: 63units","甘肃: 91units","青海: 41units","宁夏: 39units","新疆: 78units","台湾: 58units","香港: 48units","澳门: 42units","南海诸岛: 40units"],"theme":"light","colorSteps":12,"smallMap":0,"smallMapTop":50,"smallMapRight":50,"export":1,"valueLegendRight":10,"valueLegendBottom":10,"minValue":"min","maxValue":"max","title":"Map of China","titleSize":18,"titleColor":"#363636","subtitle":"czxa.top","subtitleSize":16,"subtitleColor":"#363636","autoZoom":1,"outlineAlpha":0.5,"outlineColor":"#363636","outlineThickness":0.5,"rollOverColor":null},"evals":[],"jsHooks":[]}</script>
+<p>chalk:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">cnmap</span>(<span class="dt">id =</span> df<span class="op">$</span>name, </a>
 <a class="sourceLine" id="cb6-2" title="2">      <span class="dt">value =</span> df<span class="op">$</span>value, </a>
-<a class="sourceLine" id="cb6-3" title="3">      <span class="dt">description =</span> <span class="kw">paste0</span>(df<span class="op">$</span>name, <span class="st">&quot;: &quot;</span>, df<span class="op">$</span>value, <span class="st">&quot;人&quot;</span>),</a>
+<a class="sourceLine" id="cb6-3" title="3">      <span class="dt">description =</span> <span class="kw">paste0</span>(df<span class="op">$</span>name, <span class="st">&quot;: &quot;</span>, df<span class="op">$</span>value, <span class="st">&quot;units&quot;</span>),</a>
 <a class="sourceLine" id="cb6-4" title="4">      <span class="dt">smallMap =</span> <span class="dv">0</span>,</a>
 <a class="sourceLine" id="cb6-5" title="5">      <span class="dt">width =</span> <span class="st">&quot;100%&quot;</span>,</a>
-<a class="sourceLine" id="cb6-6" title="6">      <span class="dt">theme =</span> <span class="st">&quot;dark&quot;</span>)</a></code></pre></div>
-<div id="htmlwidget-796295fb34090d4e17f4" style="width:100%;height:288px;" class="cnmap html-widget"></div>
-<script type="application/json" data-for="htmlwidget-796295fb34090d4e17f4">{"x":{"id":["北京","天津","河北","山西","内蒙古","辽宁","吉林","黑龙江","上海","江苏","浙江","安徽","福建","江西","山东","河南","湖北","湖南","广东","广西","海南","重庆","四川","贵州","云南","西藏","陕西","甘肃","青海","宁夏","新疆","台湾","香港","澳门","南海诸岛"],"value":[44,28,3,65,18,46,67,80,8,50,4,78,78,39,16,16,49,46,46,92,9,79,59,50,18,33,63,91,41,39,78,58,48,42,40],"description":["北京: 44人","天津: 28人","河北: 3人","山西: 65人","内蒙古: 18人","辽宁: 46人","吉林: 67人","黑龙江: 80人","上海: 8人","江苏: 50人","浙江: 4人","安徽: 78人","福建: 78人","江西: 39人","山东: 16人","河南: 16人","湖北: 49人","湖南: 46人","广东: 46人","广西: 92人","海南: 9人","重庆: 79人","四川: 59人","贵州: 50人","云南: 18人","西藏: 33人","陕西: 63人","甘肃: 91人","青海: 41人","宁夏: 39人","新疆: 78人","台湾: 58人","香港: 48人","澳门: 42人","南海诸岛: 40人"],"theme":"dark","colorSteps":12,"smallMap":0,"smallMapTop":50,"smallMapRight":50,"export":1,"valueLegendRight":10,"valueLegendBottom":10,"minValue":"很少","maxValue":"很多","title":"中国地图","titleSize":18,"titleColor":"#363636","subtitle":"程振兴","subtitleSize":16,"subtitleColor":"#363636","autoZoom":1,"outlineAlpha":0.5,"outlineColor":"#363636","outlineThickness":0.5,"rollOverColor":null},"evals":[],"jsHooks":[]}</script>
-<p>black 主题：</p>
+<a class="sourceLine" id="cb6-6" title="6">      <span class="dt">theme =</span> <span class="st">&quot;chalk&quot;</span>)</a></code></pre></div>
+<div id="htmlwidget-a8d20d2b97b20b19d244" style="width:100%;height:288px;" class="cnmap html-widget"></div>
+<script type="application/json" data-for="htmlwidget-a8d20d2b97b20b19d244">{"x":{"id":["北京","天津","河北","山西","内蒙古","辽宁","吉林","黑龙江","上海","江苏","浙江","安徽","福建","江西","山东","河南","湖北","湖南","广东","广西","海南","重庆","四川","贵州","云南","西藏","陕西","甘肃","青海","宁夏","新疆","台湾","香港","澳门","南海诸岛"],"value":[44,28,3,65,18,46,67,80,8,50,4,78,78,39,16,16,49,46,46,92,9,79,59,50,18,33,63,91,41,39,78,58,48,42,40],"description":["北京: 44units","天津: 28units","河北: 3units","山西: 65units","内蒙古: 18units","辽宁: 46units","吉林: 67units","黑龙江: 80units","上海: 8units","江苏: 50units","浙江: 4units","安徽: 78units","福建: 78units","江西: 39units","山东: 16units","河南: 16units","湖北: 49units","湖南: 46units","广东: 46units","广西: 92units","海南: 9units","重庆: 79units","四川: 59units","贵州: 50units","云南: 18units","西藏: 33units","陕西: 63units","甘肃: 91units","青海: 41units","宁夏: 39units","新疆: 78units","台湾: 58units","香港: 48units","澳门: 42units","南海诸岛: 40units"],"theme":"chalk","colorSteps":12,"smallMap":0,"smallMapTop":50,"smallMapRight":50,"export":1,"valueLegendRight":10,"valueLegendBottom":10,"minValue":"min","maxValue":"max","title":"Map of China","titleSize":18,"titleColor":"#363636","subtitle":"czxa.top","subtitleSize":16,"subtitleColor":"#363636","autoZoom":1,"outlineAlpha":0.5,"outlineColor":"#363636","outlineThickness":0.5,"rollOverColor":null},"evals":[],"jsHooks":[]}</script>
+<p>dark:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">cnmap</span>(<span class="dt">id =</span> df<span class="op">$</span>name, </a>
 <a class="sourceLine" id="cb7-2" title="2">      <span class="dt">value =</span> df<span class="op">$</span>value, </a>
-<a class="sourceLine" id="cb7-3" title="3">      <span class="dt">description =</span> <span class="kw">paste0</span>(df<span class="op">$</span>name, <span class="st">&quot;: &quot;</span>, df<span class="op">$</span>value, <span class="st">&quot;人&quot;</span>),</a>
+<a class="sourceLine" id="cb7-3" title="3">      <span class="dt">description =</span> <span class="kw">paste0</span>(df<span class="op">$</span>name, <span class="st">&quot;: &quot;</span>, df<span class="op">$</span>value, <span class="st">&quot;units&quot;</span>),</a>
 <a class="sourceLine" id="cb7-4" title="4">      <span class="dt">smallMap =</span> <span class="dv">0</span>,</a>
 <a class="sourceLine" id="cb7-5" title="5">      <span class="dt">width =</span> <span class="st">&quot;100%&quot;</span>,</a>
-<a class="sourceLine" id="cb7-6" title="6">      <span class="dt">theme =</span> <span class="st">&quot;black&quot;</span>)</a></code></pre></div>
-<div id="htmlwidget-525558de02788382ae20" style="width:100%;height:288px;" class="cnmap html-widget"></div>
-<script type="application/json" data-for="htmlwidget-525558de02788382ae20">{"x":{"id":["北京","天津","河北","山西","内蒙古","辽宁","吉林","黑龙江","上海","江苏","浙江","安徽","福建","江西","山东","河南","湖北","湖南","广东","广西","海南","重庆","四川","贵州","云南","西藏","陕西","甘肃","青海","宁夏","新疆","台湾","香港","澳门","南海诸岛"],"value":[44,28,3,65,18,46,67,80,8,50,4,78,78,39,16,16,49,46,46,92,9,79,59,50,18,33,63,91,41,39,78,58,48,42,40],"description":["北京: 44人","天津: 28人","河北: 3人","山西: 65人","内蒙古: 18人","辽宁: 46人","吉林: 67人","黑龙江: 80人","上海: 8人","江苏: 50人","浙江: 4人","安徽: 78人","福建: 78人","江西: 39人","山东: 16人","河南: 16人","湖北: 49人","湖南: 46人","广东: 46人","广西: 92人","海南: 9人","重庆: 79人","四川: 59人","贵州: 50人","云南: 18人","西藏: 33人","陕西: 63人","甘肃: 91人","青海: 41人","宁夏: 39人","新疆: 78人","台湾: 58人","香港: 48人","澳门: 42人","南海诸岛: 40人"],"theme":"black","colorSteps":12,"smallMap":0,"smallMapTop":50,"smallMapRight":50,"export":1,"valueLegendRight":10,"valueLegendBottom":10,"minValue":"很少","maxValue":"很多","title":"中国地图","titleSize":18,"titleColor":"#363636","subtitle":"程振兴","subtitleSize":16,"subtitleColor":"#363636","autoZoom":1,"outlineAlpha":0.5,"outlineColor":"#363636","outlineThickness":0.5,"rollOverColor":null},"evals":[],"jsHooks":[]}</script>
-</div>
-<div id="colorsteps" class="section level3">
-<h3>colorSteps：图例中颜色的分层数量</h3>
+<a class="sourceLine" id="cb7-6" title="6">      <span class="dt">theme =</span> <span class="st">&quot;dark&quot;</span>)</a></code></pre></div>
+<div id="htmlwidget-bb82febb5c92389796f7" style="width:100%;height:288px;" class="cnmap html-widget"></div>
+<script type="application/json" data-for="htmlwidget-bb82febb5c92389796f7">{"x":{"id":["北京","天津","河北","山西","内蒙古","辽宁","吉林","黑龙江","上海","江苏","浙江","安徽","福建","江西","山东","河南","湖北","湖南","广东","广西","海南","重庆","四川","贵州","云南","西藏","陕西","甘肃","青海","宁夏","新疆","台湾","香港","澳门","南海诸岛"],"value":[44,28,3,65,18,46,67,80,8,50,4,78,78,39,16,16,49,46,46,92,9,79,59,50,18,33,63,91,41,39,78,58,48,42,40],"description":["北京: 44units","天津: 28units","河北: 3units","山西: 65units","内蒙古: 18units","辽宁: 46units","吉林: 67units","黑龙江: 80units","上海: 8units","江苏: 50units","浙江: 4units","安徽: 78units","福建: 78units","江西: 39units","山东: 16units","河南: 16units","湖北: 49units","湖南: 46units","广东: 46units","广西: 92units","海南: 9units","重庆: 79units","四川: 59units","贵州: 50units","云南: 18units","西藏: 33units","陕西: 63units","甘肃: 91units","青海: 41units","宁夏: 39units","新疆: 78units","台湾: 58units","香港: 48units","澳门: 42units","南海诸岛: 40units"],"theme":"dark","colorSteps":12,"smallMap":0,"smallMapTop":50,"smallMapRight":50,"export":1,"valueLegendRight":10,"valueLegendBottom":10,"minValue":"min","maxValue":"max","title":"Map of China","titleSize":18,"titleColor":"#363636","subtitle":"czxa.top","subtitleSize":16,"subtitleColor":"#363636","autoZoom":1,"outlineAlpha":0.5,"outlineColor":"#363636","outlineThickness":0.5,"rollOverColor":null},"evals":[],"jsHooks":[]}</script>
+<p>black:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw">cnmap</span>(<span class="dt">id =</span> df<span class="op">$</span>name, </a>
 <a class="sourceLine" id="cb8-2" title="2">      <span class="dt">value =</span> df<span class="op">$</span>value, </a>
-<a class="sourceLine" id="cb8-3" title="3">      <span class="dt">description =</span> <span class="kw">paste0</span>(df<span class="op">$</span>name, <span class="st">&quot;: &quot;</span>, df<span class="op">$</span>value, <span class="st">&quot;人&quot;</span>),</a>
+<a class="sourceLine" id="cb8-3" title="3">      <span class="dt">description =</span> <span class="kw">paste0</span>(df<span class="op">$</span>name, <span class="st">&quot;: &quot;</span>, df<span class="op">$</span>value, <span class="st">&quot;units&quot;</span>),</a>
 <a class="sourceLine" id="cb8-4" title="4">      <span class="dt">smallMap =</span> <span class="dv">0</span>,</a>
 <a class="sourceLine" id="cb8-5" title="5">      <span class="dt">width =</span> <span class="st">&quot;100%&quot;</span>,</a>
-<a class="sourceLine" id="cb8-6" title="6">      <span class="dt">colorSteps =</span> <span class="dv">5</span>)</a></code></pre></div>
-<div id="htmlwidget-dac6377396188287edf1" style="width:100%;height:288px;" class="cnmap html-widget"></div>
-<script type="application/json" data-for="htmlwidget-dac6377396188287edf1">{"x":{"id":["北京","天津","河北","山西","内蒙古","辽宁","吉林","黑龙江","上海","江苏","浙江","安徽","福建","江西","山东","河南","湖北","湖南","广东","广西","海南","重庆","四川","贵州","云南","西藏","陕西","甘肃","青海","宁夏","新疆","台湾","香港","澳门","南海诸岛"],"value":[44,28,3,65,18,46,67,80,8,50,4,78,78,39,16,16,49,46,46,92,9,79,59,50,18,33,63,91,41,39,78,58,48,42,40],"description":["北京: 44人","天津: 28人","河北: 3人","山西: 65人","内蒙古: 18人","辽宁: 46人","吉林: 67人","黑龙江: 80人","上海: 8人","江苏: 50人","浙江: 4人","安徽: 78人","福建: 78人","江西: 39人","山东: 16人","河南: 16人","湖北: 49人","湖南: 46人","广东: 46人","广西: 92人","海南: 9人","重庆: 79人","四川: 59人","贵州: 50人","云南: 18人","西藏: 33人","陕西: 63人","甘肃: 91人","青海: 41人","宁夏: 39人","新疆: 78人","台湾: 58人","香港: 48人","澳门: 42人","南海诸岛: 40人"],"theme":null,"colorSteps":5,"smallMap":0,"smallMapTop":50,"smallMapRight":50,"export":1,"valueLegendRight":10,"valueLegendBottom":10,"minValue":"很少","maxValue":"很多","title":"中国地图","titleSize":18,"titleColor":"#363636","subtitle":"程振兴","subtitleSize":16,"subtitleColor":"#363636","autoZoom":1,"outlineAlpha":0.5,"outlineColor":"#363636","outlineThickness":0.5,"rollOverColor":null},"evals":[],"jsHooks":[]}</script>
+<a class="sourceLine" id="cb8-6" title="6">      <span class="dt">theme =</span> <span class="st">&quot;black&quot;</span>)</a></code></pre></div>
+<div id="htmlwidget-01724e3e89e52fc4e0e9" style="width:100%;height:288px;" class="cnmap html-widget"></div>
+<script type="application/json" data-for="htmlwidget-01724e3e89e52fc4e0e9">{"x":{"id":["北京","天津","河北","山西","内蒙古","辽宁","吉林","黑龙江","上海","江苏","浙江","安徽","福建","江西","山东","河南","湖北","湖南","广东","广西","海南","重庆","四川","贵州","云南","西藏","陕西","甘肃","青海","宁夏","新疆","台湾","香港","澳门","南海诸岛"],"value":[44,28,3,65,18,46,67,80,8,50,4,78,78,39,16,16,49,46,46,92,9,79,59,50,18,33,63,91,41,39,78,58,48,42,40],"description":["北京: 44units","天津: 28units","河北: 3units","山西: 65units","内蒙古: 18units","辽宁: 46units","吉林: 67units","黑龙江: 80units","上海: 8units","江苏: 50units","浙江: 4units","安徽: 78units","福建: 78units","江西: 39units","山东: 16units","河南: 16units","湖北: 49units","湖南: 46units","广东: 46units","广西: 92units","海南: 9units","重庆: 79units","四川: 59units","贵州: 50units","云南: 18units","西藏: 33units","陕西: 63units","甘肃: 91units","青海: 41units","宁夏: 39units","新疆: 78units","台湾: 58units","香港: 48units","澳门: 42units","南海诸岛: 40units"],"theme":"black","colorSteps":12,"smallMap":0,"smallMapTop":50,"smallMapRight":50,"export":1,"valueLegendRight":10,"valueLegendBottom":10,"minValue":"min","maxValue":"max","title":"Map of China","titleSize":18,"titleColor":"#363636","subtitle":"czxa.top","subtitleSize":16,"subtitleColor":"#363636","autoZoom":1,"outlineAlpha":0.5,"outlineColor":"#363636","outlineThickness":0.5,"rollOverColor":null},"evals":[],"jsHooks":[]}</script>
 </div>
-<div id="smallmap" class="section level3">
-<h3>smallMap：添加小地图</h3>
+<div id="colorsteps-set-the-number-of-layers-of-colors-in-legends" class="section level3">
+<h3>colorSteps: set the number of layers of colors in legends</h3>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw">cnmap</span>(<span class="dt">id =</span> df<span class="op">$</span>name, </a>
 <a class="sourceLine" id="cb9-2" title="2">      <span class="dt">value =</span> df<span class="op">$</span>value, </a>
-<a class="sourceLine" id="cb9-3" title="3">      <span class="dt">description =</span> <span class="kw">paste0</span>(df<span class="op">$</span>name, <span class="st">&quot;: &quot;</span>, df<span class="op">$</span>value, <span class="st">&quot;人&quot;</span>),</a>
-<a class="sourceLine" id="cb9-4" title="4">      <span class="dt">smallMap =</span> <span class="dv">1</span>,</a>
-<a class="sourceLine" id="cb9-5" title="5">      <span class="dt">smallMapTop =</span> <span class="dv">160</span>,</a>
-<a class="sourceLine" id="cb9-6" title="6">      <span class="dt">smallMapRight =</span> <span class="dv">10</span>,</a>
-<a class="sourceLine" id="cb9-7" title="7">      <span class="dt">width =</span> <span class="st">&quot;100%&quot;</span>,</a>
-<a class="sourceLine" id="cb9-8" title="8">      <span class="dt">colorSteps =</span> <span class="dv">5</span>)</a></code></pre></div>
-<div id="htmlwidget-846c778f5b75f69d8721" style="width:100%;height:288px;" class="cnmap html-widget"></div>
-<script type="application/json" data-for="htmlwidget-846c778f5b75f69d8721">{"x":{"id":["北京","天津","河北","山西","内蒙古","辽宁","吉林","黑龙江","上海","江苏","浙江","安徽","福建","江西","山东","河南","湖北","湖南","广东","广西","海南","重庆","四川","贵州","云南","西藏","陕西","甘肃","青海","宁夏","新疆","台湾","香港","澳门","南海诸岛"],"value":[44,28,3,65,18,46,67,80,8,50,4,78,78,39,16,16,49,46,46,92,9,79,59,50,18,33,63,91,41,39,78,58,48,42,40],"description":["北京: 44人","天津: 28人","河北: 3人","山西: 65人","内蒙古: 18人","辽宁: 46人","吉林: 67人","黑龙江: 80人","上海: 8人","江苏: 50人","浙江: 4人","安徽: 78人","福建: 78人","江西: 39人","山东: 16人","河南: 16人","湖北: 49人","湖南: 46人","广东: 46人","广西: 92人","海南: 9人","重庆: 79人","四川: 59人","贵州: 50人","云南: 18人","西藏: 33人","陕西: 63人","甘肃: 91人","青海: 41人","宁夏: 39人","新疆: 78人","台湾: 58人","香港: 48人","澳门: 42人","南海诸岛: 40人"],"theme":null,"colorSteps":5,"smallMap":1,"smallMapTop":160,"smallMapRight":10,"export":1,"valueLegendRight":10,"valueLegendBottom":10,"minValue":"很少","maxValue":"很多","title":"中国地图","titleSize":18,"titleColor":"#363636","subtitle":"程振兴","subtitleSize":16,"subtitleColor":"#363636","autoZoom":1,"outlineAlpha":0.5,"outlineColor":"#363636","outlineThickness":0.5,"rollOverColor":null},"evals":[],"jsHooks":[]}</script>
+<a class="sourceLine" id="cb9-3" title="3">      <span class="dt">description =</span> <span class="kw">paste0</span>(df<span class="op">$</span>name, <span class="st">&quot;: &quot;</span>, df<span class="op">$</span>value, <span class="st">&quot;units&quot;</span>),</a>
+<a class="sourceLine" id="cb9-4" title="4">      <span class="dt">smallMap =</span> <span class="dv">0</span>,</a>
+<a class="sourceLine" id="cb9-5" title="5">      <span class="dt">width =</span> <span class="st">&quot;100%&quot;</span>,</a>
+<a class="sourceLine" id="cb9-6" title="6">      <span class="dt">colorSteps =</span> <span class="dv">5</span>)</a></code></pre></div>
+<div id="htmlwidget-97137ba502d88a234a4e" style="width:100%;height:288px;" class="cnmap html-widget"></div>
+<script type="application/json" data-for="htmlwidget-97137ba502d88a234a4e">{"x":{"id":["北京","天津","河北","山西","内蒙古","辽宁","吉林","黑龙江","上海","江苏","浙江","安徽","福建","江西","山东","河南","湖北","湖南","广东","广西","海南","重庆","四川","贵州","云南","西藏","陕西","甘肃","青海","宁夏","新疆","台湾","香港","澳门","南海诸岛"],"value":[44,28,3,65,18,46,67,80,8,50,4,78,78,39,16,16,49,46,46,92,9,79,59,50,18,33,63,91,41,39,78,58,48,42,40],"description":["北京: 44units","天津: 28units","河北: 3units","山西: 65units","内蒙古: 18units","辽宁: 46units","吉林: 67units","黑龙江: 80units","上海: 8units","江苏: 50units","浙江: 4units","安徽: 78units","福建: 78units","江西: 39units","山东: 16units","河南: 16units","湖北: 49units","湖南: 46units","广东: 46units","广西: 92units","海南: 9units","重庆: 79units","四川: 59units","贵州: 50units","云南: 18units","西藏: 33units","陕西: 63units","甘肃: 91units","青海: 41units","宁夏: 39units","新疆: 78units","台湾: 58units","香港: 48units","澳门: 42units","南海诸岛: 40units"],"theme":null,"colorSteps":5,"smallMap":0,"smallMapTop":50,"smallMapRight":50,"export":1,"valueLegendRight":10,"valueLegendBottom":10,"minValue":"min","maxValue":"max","title":"Map of China","titleSize":18,"titleColor":"#363636","subtitle":"czxa.top","subtitleSize":16,"subtitleColor":"#363636","autoZoom":1,"outlineAlpha":0.5,"outlineColor":"#363636","outlineThickness":0.5,"rollOverColor":null},"evals":[],"jsHooks":[]}</script>
 </div>
-<div id="valuelegendbottom-valuelegendright" class="section level3">
-<h3>valueLegendBottom / valueLegendRight：图例的位置</h3>
+<div id="smallmap-add-a-minimap" class="section level3">
+<h3>smallMap: add a minimap</h3>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw">cnmap</span>(<span class="dt">id =</span> df<span class="op">$</span>name, </a>
 <a class="sourceLine" id="cb10-2" title="2">      <span class="dt">value =</span> df<span class="op">$</span>value, </a>
-<a class="sourceLine" id="cb10-3" title="3">      <span class="dt">description =</span> <span class="kw">paste0</span>(df<span class="op">$</span>name, <span class="st">&quot;: &quot;</span>, df<span class="op">$</span>value, <span class="st">&quot;人&quot;</span>),</a>
-<a class="sourceLine" id="cb10-4" title="4">      <span class="dt">smallMap =</span> <span class="dv">0</span>,</a>
-<a class="sourceLine" id="cb10-5" title="5">      <span class="dt">valueLegendBottom =</span> <span class="dv">40</span>,</a>
-<a class="sourceLine" id="cb10-6" title="6">      <span class="dt">valueLegendRight =</span> <span class="dv">350</span>,</a>
+<a class="sourceLine" id="cb10-3" title="3">      <span class="dt">description =</span> <span class="kw">paste0</span>(df<span class="op">$</span>name, <span class="st">&quot;: &quot;</span>, df<span class="op">$</span>value, <span class="st">&quot;units&quot;</span>),</a>
+<a class="sourceLine" id="cb10-4" title="4">      <span class="dt">smallMap =</span> <span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb10-5" title="5">      <span class="dt">smallMapTop =</span> <span class="dv">160</span>,</a>
+<a class="sourceLine" id="cb10-6" title="6">      <span class="dt">smallMapRight =</span> <span class="dv">10</span>,</a>
 <a class="sourceLine" id="cb10-7" title="7">      <span class="dt">width =</span> <span class="st">&quot;100%&quot;</span>,</a>
 <a class="sourceLine" id="cb10-8" title="8">      <span class="dt">colorSteps =</span> <span class="dv">5</span>)</a></code></pre></div>
-<div id="htmlwidget-1d3f7037160eedb0a7b9" style="width:100%;height:288px;" class="cnmap html-widget"></div>
-<script type="application/json" data-for="htmlwidget-1d3f7037160eedb0a7b9">{"x":{"id":["北京","天津","河北","山西","内蒙古","辽宁","吉林","黑龙江","上海","江苏","浙江","安徽","福建","江西","山东","河南","湖北","湖南","广东","广西","海南","重庆","四川","贵州","云南","西藏","陕西","甘肃","青海","宁夏","新疆","台湾","香港","澳门","南海诸岛"],"value":[44,28,3,65,18,46,67,80,8,50,4,78,78,39,16,16,49,46,46,92,9,79,59,50,18,33,63,91,41,39,78,58,48,42,40],"description":["北京: 44人","天津: 28人","河北: 3人","山西: 65人","内蒙古: 18人","辽宁: 46人","吉林: 67人","黑龙江: 80人","上海: 8人","江苏: 50人","浙江: 4人","安徽: 78人","福建: 78人","江西: 39人","山东: 16人","河南: 16人","湖北: 49人","湖南: 46人","广东: 46人","广西: 92人","海南: 9人","重庆: 79人","四川: 59人","贵州: 50人","云南: 18人","西藏: 33人","陕西: 63人","甘肃: 91人","青海: 41人","宁夏: 39人","新疆: 78人","台湾: 58人","香港: 48人","澳门: 42人","南海诸岛: 40人"],"theme":null,"colorSteps":5,"smallMap":0,"smallMapTop":50,"smallMapRight":50,"export":1,"valueLegendRight":350,"valueLegendBottom":40,"minValue":"很少","maxValue":"很多","title":"中国地图","titleSize":18,"titleColor":"#363636","subtitle":"程振兴","subtitleSize":16,"subtitleColor":"#363636","autoZoom":1,"outlineAlpha":0.5,"outlineColor":"#363636","outlineThickness":0.5,"rollOverColor":null},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-0e32575c71ac588bd22a" style="width:100%;height:288px;" class="cnmap html-widget"></div>
+<script type="application/json" data-for="htmlwidget-0e32575c71ac588bd22a">{"x":{"id":["北京","天津","河北","山西","内蒙古","辽宁","吉林","黑龙江","上海","江苏","浙江","安徽","福建","江西","山东","河南","湖北","湖南","广东","广西","海南","重庆","四川","贵州","云南","西藏","陕西","甘肃","青海","宁夏","新疆","台湾","香港","澳门","南海诸岛"],"value":[44,28,3,65,18,46,67,80,8,50,4,78,78,39,16,16,49,46,46,92,9,79,59,50,18,33,63,91,41,39,78,58,48,42,40],"description":["北京: 44units","天津: 28units","河北: 3units","山西: 65units","内蒙古: 18units","辽宁: 46units","吉林: 67units","黑龙江: 80units","上海: 8units","江苏: 50units","浙江: 4units","安徽: 78units","福建: 78units","江西: 39units","山东: 16units","河南: 16units","湖北: 49units","湖南: 46units","广东: 46units","广西: 92units","海南: 9units","重庆: 79units","四川: 59units","贵州: 50units","云南: 18units","西藏: 33units","陕西: 63units","甘肃: 91units","青海: 41units","宁夏: 39units","新疆: 78units","台湾: 58units","香港: 48units","澳门: 42units","南海诸岛: 40units"],"theme":null,"colorSteps":5,"smallMap":1,"smallMapTop":160,"smallMapRight":10,"export":1,"valueLegendRight":10,"valueLegendBottom":10,"minValue":"min","maxValue":"max","title":"Map of China","titleSize":18,"titleColor":"#363636","subtitle":"czxa.top","subtitleSize":16,"subtitleColor":"#363636","autoZoom":1,"outlineAlpha":0.5,"outlineColor":"#363636","outlineThickness":0.5,"rollOverColor":null},"evals":[],"jsHooks":[]}</script>
 </div>
+<div id="valuelegendbottom-valuelegendright-location-of-legends" class="section level3">
+<h3>valueLegendBottom / valueLegendRight: location of legends</h3>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="kw">cnmap</span>(<span class="dt">id =</span> df<span class="op">$</span>name, </a>
+<a class="sourceLine" id="cb11-2" title="2">      <span class="dt">value =</span> df<span class="op">$</span>value, </a>
+<a class="sourceLine" id="cb11-3" title="3">      <span class="dt">description =</span> <span class="kw">paste0</span>(df<span class="op">$</span>name, <span class="st">&quot;: &quot;</span>, df<span class="op">$</span>value, <span class="st">&quot;units&quot;</span>),</a>
+<a class="sourceLine" id="cb11-4" title="4">      <span class="dt">smallMap =</span> <span class="dv">0</span>,</a>
+<a class="sourceLine" id="cb11-5" title="5">      <span class="dt">valueLegendBottom =</span> <span class="dv">40</span>,</a>
+<a class="sourceLine" id="cb11-6" title="6">      <span class="dt">valueLegendRight =</span> <span class="dv">350</span>,</a>
+<a class="sourceLine" id="cb11-7" title="7">      <span class="dt">width =</span> <span class="st">&quot;100%&quot;</span>,</a>
+<a class="sourceLine" id="cb11-8" title="8">      <span class="dt">colorSteps =</span> <span class="dv">5</span>)</a></code></pre></div>
+<div id="htmlwidget-2f00b3f961e99c1b6b50" style="width:100%;height:288px;" class="cnmap html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2f00b3f961e99c1b6b50">{"x":{"id":["北京","天津","河北","山西","内蒙古","辽宁","吉林","黑龙江","上海","江苏","浙江","安徽","福建","江西","山东","河南","湖北","湖南","广东","广西","海南","重庆","四川","贵州","云南","西藏","陕西","甘肃","青海","宁夏","新疆","台湾","香港","澳门","南海诸岛"],"value":[44,28,3,65,18,46,67,80,8,50,4,78,78,39,16,16,49,46,46,92,9,79,59,50,18,33,63,91,41,39,78,58,48,42,40],"description":["北京: 44units","天津: 28units","河北: 3units","山西: 65units","内蒙古: 18units","辽宁: 46units","吉林: 67units","黑龙江: 80units","上海: 8units","江苏: 50units","浙江: 4units","安徽: 78units","福建: 78units","江西: 39units","山东: 16units","河南: 16units","湖北: 49units","湖南: 46units","广东: 46units","广西: 92units","海南: 9units","重庆: 79units","四川: 59units","贵州: 50units","云南: 18units","西藏: 33units","陕西: 63units","甘肃: 91units","青海: 41units","宁夏: 39units","新疆: 78units","台湾: 58units","香港: 48units","澳门: 42units","南海诸岛: 40units"],"theme":null,"colorSteps":5,"smallMap":0,"smallMapTop":50,"smallMapRight":50,"export":1,"valueLegendRight":350,"valueLegendBottom":40,"minValue":"min","maxValue":"max","title":"Map of China","titleSize":18,"titleColor":"#363636","subtitle":"czxa.top","subtitleSize":16,"subtitleColor":"#363636","autoZoom":1,"outlineAlpha":0.5,"outlineColor":"#363636","outlineThickness":0.5,"rollOverColor":null},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<div id="else" class="section level2">
+<h2>Else</h2>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1">?mapbrew<span class="op">::</span><span class="kw">cnmap</span>()</a></code></pre></div>
 </div>
 
+
+
+<!-- code folding -->
 
 
 <!-- dynamically load mathjax for compatibility with self-contained -->

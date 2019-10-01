@@ -30,14 +30,21 @@
 #' @param ... NULL
 #'
 #' @examples
-#' library(dplyr)
-#' library(magrittr)
-#' library(hchinamap)
 #' library(mapbrew)
-#' df <- chinadf %>% dplyr::filter(region == "中国")
-#' cnmap(id = df$name, value = df$value,
-#'      description = paste0(df$name, ": ", df$value, "人"),
-#'      smallMap = 0, theme = "dark")
+#' library(magrittr)
+#' dir <- tempdir()
+#' download.file('https://czxb.github.io/br/chinadf.rda', file.path(dir, 'chinadf.rda'))
+#' load(file.path(dir, 'chinadf.rda'), verbose = TRUE)
+#' df <- chinadf %>%
+#'   dplyr::filter(region == "China")
+#' if(interactive()) {
+#'   cnmap(id = df$name,
+#'         value = df$value,
+#'         description = paste0(df$name, ": ", df$value, "人"),
+#'         smallMap = 0,
+#'         theme = "dark",
+#'         width = "100%")
+#' }
 #'
 #' @import htmlwidgets
 #'

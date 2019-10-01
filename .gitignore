@@ -4,3 +4,6 @@
 # Ada Library Information
 *.ali
 .Rproj.user
+.DS_Store
+doc
+Meta

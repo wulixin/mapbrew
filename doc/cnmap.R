@@ -5,17 +5,21 @@ knitr::opts_chunk$set(
 )
 
 ## ----eval=FALSE, include=TRUE--------------------------------------------
-#  devtools::install_github('czxa/mapbrew')
+#  devtools::install_github('czxa/mapbrew', build_vignettes = TRUE)
 
 ## ------------------------------------------------------------------------
-library(motherland)
+dir <- tempdir()
+download.file('https://czxb.github.io/br/chinadf.rda', file.path(dir, 'chinadf.rda'))
+load(file.path(dir, 'chinadf.rda'), verbose = TRUE)
+
+## ------------------------------------------------------------------------
 library(mapbrew)
 library(magrittr)
-df <- motherland::chinadf %>% 
-  dplyr::filter(region == "中国")
+df <- chinadf %>% 
+  dplyr::filter(region == "China")
 cnmap(id = df$name, 
       value = df$value, 
-      description = paste0(df$name, ": ", df$value, "人"),
+      description = paste0(df$name, ": ", df$value, "units"),
       smallMap = 0, 
       theme = "dark",
       width = "100%")
@@ -23,14 +27,14 @@ cnmap(id = df$name,
 ## ------------------------------------------------------------------------
 cnmap(id = df$name, 
       value = df$value, 
-      description = paste0(df$name, ": ", df$value, "人"),
+      description = paste0(df$name, ": ", df$value, "units"),
       smallMap = 0,
       width = "100%")
 
 ## ------------------------------------------------------------------------
 cnmap(id = df$name, 
       value = df$value, 
-      description = paste0(df$name, ": ", df$value, "人"),
+      description = paste0(df$name, ": ", df$value, "units"),
       smallMap = 0,
       width = "100%",
       theme = "light")
@@ -38,7 +42,7 @@ cnmap(id = df$name,
 ## ------------------------------------------------------------------------
 cnmap(id = df$name, 
       value = df$value, 
-      description = paste0(df$name, ": ", df$value, "人"),
+      description = paste0(df$name, ": ", df$value, "units"),
       smallMap = 0,
       width = "100%",
       theme = "chalk")
@@ -46,7 +50,7 @@ cnmap(id = df$name,
 ## ------------------------------------------------------------------------
 cnmap(id = df$name, 
       value = df$value, 
-      description = paste0(df$name, ": ", df$value, "人"),
+      description = paste0(df$name, ": ", df$value, "units"),
       smallMap = 0,
       width = "100%",
       theme = "dark")
@@ -54,7 +58,7 @@ cnmap(id = df$name,
 ## ------------------------------------------------------------------------
 cnmap(id = df$name, 
       value = df$value, 
-      description = paste0(df$name, ": ", df$value, "人"),
+      description = paste0(df$name, ": ", df$value, "units"),
       smallMap = 0,
       width = "100%",
       theme = "black")
@@ -62,7 +66,7 @@ cnmap(id = df$name,
 ## ------------------------------------------------------------------------
 cnmap(id = df$name, 
       value = df$value, 
-      description = paste0(df$name, ": ", df$value, "人"),
+      description = paste0(df$name, ": ", df$value, "units"),
       smallMap = 0,
       width = "100%",
       colorSteps = 5)
@@ -70,7 +74,7 @@ cnmap(id = df$name,
 ## ------------------------------------------------------------------------
 cnmap(id = df$name, 
       value = df$value, 
-      description = paste0(df$name, ": ", df$value, "人"),
+      description = paste0(df$name, ": ", df$value, "units"),
       smallMap = 1,
       smallMapTop = 160,
       smallMapRight = 10,
@@ -80,7 +84,7 @@ cnmap(id = df$name,
 ## ------------------------------------------------------------------------
 cnmap(id = df$name, 
       value = df$value, 
-      description = paste0(df$name, ": ", df$value, "人"),
+      description = paste0(df$name, ": ", df$value, "units"),
       smallMap = 0,
       valueLegendBottom = 40,
       valueLegendRight = 350,

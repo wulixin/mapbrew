@@ -1,10 +1,10 @@
 ---
-title: "使用 amCharts + R 绘制中国地图"
-author: "程振兴"
+title: "Map China With AmCharts and R"
+author: "Zhenxing Cheng"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{Map China With AmCharts and R}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -16,101 +16,108 @@ knitr::opts_chunk$set(
 )
 ```
 
-## 安装
+## Installation
 
 ```{r eval=FALSE, include=TRUE}
-devtools::install_github('czxa/mapbrew')
+devtools::install_github('czxa/mapbrew', build_vignettes = TRUE)
 ```
 
-## 绘制中国地图
+## China map
+
+Load sample data:
 
 ```{r}
-library(motherland)
+dir <- tempdir()
+download.file('https://czxb.github.io/br/chinadf.rda', file.path(dir, 'chinadf.rda'))
+load(file.path(dir, 'chinadf.rda'), verbose = TRUE)
+```
+
+```{r}
 library(mapbrew)
 library(magrittr)
-df <- motherland::chinadf %>% 
-  dplyr::filter(region == "中国")
+df <- chinadf %>% 
+  dplyr::filter(region == "China")
 cnmap(id = df$name, 
       value = df$value, 
-      description = paste0(df$name, ": ", df$value, "人"),
+      description = paste0(df$name, ": ", df$value, "units"),
       smallMap = 0, 
       theme = "dark",
       width = "100%")
 ```
 
-### 更改主题
+### Themes
 
-首先是默认主题：
+The default theme:
 
 ```{r}
 cnmap(id = df$name, 
       value = df$value, 
-      description = paste0(df$name, ": ", df$value, "人"),
+      description = paste0(df$name, ": ", df$value, "units"),
       smallMap = 0,
       width = "100%")
 ```
 
-light 主题：
+light: 
 
 ```{r}
 cnmap(id = df$name, 
       value = df$value, 
-      description = paste0(df$name, ": ", df$value, "人"),
+      description = paste0(df$name, ": ", df$value, "units"),
       smallMap = 0,
       width = "100%",
       theme = "light")
 ```
 
-chalk 主题：
+chalk: 
 
 ```{r}
 cnmap(id = df$name, 
       value = df$value, 
-      description = paste0(df$name, ": ", df$value, "人"),
+      description = paste0(df$name, ": ", df$value, "units"),
       smallMap = 0,
       width = "100%",
       theme = "chalk")
 ```
 
-dark 主题：
+dark: 
 
 ```{r}
 cnmap(id = df$name, 
       value = df$value, 
-      description = paste0(df$name, ": ", df$value, "人"),
+      description = paste0(df$name, ": ", df$value, "units"),
       smallMap = 0,
       width = "100%",
       theme = "dark")
 ```
 
-black 主题：
+black: 
 
 ```{r}
 cnmap(id = df$name, 
       value = df$value, 
-      description = paste0(df$name, ": ", df$value, "人"),
+      description = paste0(df$name, ": ", df$value, "units"),
       smallMap = 0,
       width = "100%",
       theme = "black")
 ```
 
-### colorSteps：图例中颜色的分层数量
+### colorSteps: set the number of layers of colors in legends
 
 ```{r}
 cnmap(id = df$name, 
       value = df$value, 
-      description = paste0(df$name, ": ", df$value, "人"),
+      description = paste0(df$name, ": ", df$value, "units"),
       smallMap = 0,
       width = "100%",
       colorSteps = 5)
 ```
 
-### smallMap：添加小地图
+### smallMap: add a minimap
 
 ```{r}
 cnmap(id = df$name, 
       value = df$value, 
-      description = paste0(df$name, ": ", df$value, "人"),
+      description = paste0(df$name, ": ", df$value, "units"),
       smallMap = 1,
       smallMapTop = 160,
       smallMapRight = 10,
@@ -118,15 +125,21 @@ cnmap(id = df$name,
       colorSteps = 5)
 ```
 
-### valueLegendBottom / valueLegendRight：图例的位置
+### valueLegendBottom / valueLegendRight: location of legends
 
 ```{r}
 cnmap(id = df$name, 
       value = df$value, 
-      description = paste0(df$name, ": ", df$value, "人"),
+      description = paste0(df$name, ": ", df$value, "units"),
       smallMap = 0,
       valueLegendBottom = 40,
       valueLegendRight = 350,
       width = "100%",
       colorSteps = 5)
+```
+
+## Else
+
+```r 
+?mapbrew::cnmap()
 ```
